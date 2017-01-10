@@ -1,0 +1,107 @@
+<link rel="import" href="./../../bower_components/paper-icon-button/paper-icon-button.html">
+<link rel="import" href="./../../bower_components/paper-toolbar/paper-toolbar.html">
+<link rel="import" href="./../../bower_components/iron-icons/iron-icons.html">
+<link rel="import" href="./../../bower_components/iron-icon/iron-icon.html">
+<link rel="import" href="./../../bower_components/neon-animation/neon-shared-element-animatable-behavior.html">
+<link rel="import" href="./../../bower_components/neon-animation/animations/hero-animation.html">
+<link rel="import" href="./../../bower_components/neon-animation/animations/fade-out-animation.html">
+<link rel="import" href="./../../bower_components/neon-animation/animations/fade-in-animation.html">
+
+<link href="https://fonts.googleapis.com/css?family=Roboto:100" rel="stylesheet">
+<link rel="import" href="./../icons-app/icons-app.html">
+
+<dom-module id="init-splash">
+	<template>
+	<style is="custom-style">
+	:host{
+		 @apply(--layout-center-center);
+		 @apply(--layout-vertical);
+		color:white;
+		padding: 0 40px 0px 40px;
+		background: #1f2cba; /* Old browsers */
+		background: -moz-linear-gradient(top,  #1f2cba 0%, #805382 100%); /* FF3.6-15 */
+		background: -webkit-linear-gradient(top,  #1f2cba 0%,#805382 100%); /* Chrome10-25,Safari5.1-6 */
+		background: linear-gradient(to bottom,  #1f2cba 0%,#805382 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+		filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#1f2cba', endColorstr='#805382',GradientType=0 ); /* IE6-9 */
+	}
+	iron-icon {
+      height: 200px;
+      width: 200px;
+
+    }
+	iron-icon:nth-of-type(1) {
+      fill: white;
+	  transition: .3s ease-in-out;
+	  animation: changeColor 5s infinite alternate;
+    }
+	@keyframes changeColor {
+		0% {
+			fill: white;
+		}
+		100% {
+			fill: white;
+		}
+	}
+
+
+	h1{
+		font-size: 32px;
+		@apply(--paper-font-common-base);
+		font-weight: 100;
+		margin: 2px;
+		padding:2px;
+	}
+	h5{
+		margin: 2px;
+		padding:2px;
+		font-size: 14px;
+		@apply(--paper-font-common-base);
+		font-weight: 100;
+		text-align: center;
+	}
+	</style>
+		 <iron-icon id="logo" icon="icons-app:logo"></iron-icon>
+		 <h1>Q' Chevere</h1>
+		 <h5>En cuentra el mejor lugar para disfrutar tu dìa</h5>
+	</template>
+	<script>
+		Polymer({
+			is: "init-splash",
+			behaviors: [Polymer.NeonSharedElementAnimatableBehavior],
+			properties: {
+				animationConfig: {
+					value: function() {
+					  return {
+						'entry': {
+						  name: 'fade-in-animation',
+						  node: this
+						},
+						'exit': [{
+						  name: 'hero-animation',
+						  id: 'splash-init',
+						  fromPage: this
+						}, {
+						  name: 'fade-out-animation',
+						  node: this
+						}]
+					  }
+					}
+				},
+				sharedElements:{
+					value:function(){
+						return {
+							'splash-init':this.$.logo
+						};
+					}
+				},
+			},
+			ready:function(){
+				var self = this;
+				setTimeout(function(){
+						self.fire('show-init-app');
+				},4000);
+			}
+
+		});
+	</script>
+</dom-module>

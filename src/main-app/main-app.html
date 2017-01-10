@@ -1,0 +1,58 @@
+<link rel="import" href="./../../bower_components/polymer/polymer.html">
+<link rel="import" href="./../../bower_components/app-route/app-location.html">
+<link rel="import" href="./../../bower_components/app-route/app-route.html">
+<link rel="import" href="./../../bower_components/paper-styles/paper-styles.html">
+<link rel="import" href="./../../bower_components/paper-drawer-panel/paper-drawer-panel.html">
+<link rel="import" href="./../../bower_components/paper-icon-button/paper-icon-button.html">
+<link rel="import" href="./../../bower_components/paper-toolbar/paper-toolbar.html">
+<link rel="import" href="./../../bower_components/iron-icons/iron-icons.html">
+<dom-module id="main-app">
+  <template>
+    <style is="custom-style">
+      :host {
+        display: block;
+        @apply(--paper-font-common-base);
+      }
+    </style>
+    <paper-drawer-panel>
+      <div drawer>
+          <paper-toolbar  class="tall">
+            <paper-icon-button icon="menu" on-tap="toggle" ></paper-icon-button>
+            <div class="title">[[prop1]]</div>
+            <paper-icon-button icon="more-vert" ></paper-icon-button>
+          </paper-toolbar>
+      </div>
+      <div main>
+          <paper-toolbar>
+            <paper-icon-button icon="menu" on-tap="toggle" ></paper-icon-button>
+            <div class="title">[[prop1]]</div>
+            <paper-icon-button icon="more-vert" ></paper-icon-button>
+          </paper-toolbar>
+      </div>
+    </paper-drawer-panel>
+    <!--
+      app-location and app-route elements provide the state of the URL for the app.
+    -->
+    <app-location route="{{route}}"></app-location>
+    <app-route
+        route="{{route}}"
+        pattern="/:page"
+        data="{{routeData}}"
+        tail="{{subroute}}"></app-route>
+  </template>
+
+  <script>
+    Polymer({
+
+      is: 'main-app',
+
+      properties: {
+        prop1: {
+          type: String,
+          value: 'App Motos',
+        },
+      },
+
+    });
+  </script>
+</dom-module>

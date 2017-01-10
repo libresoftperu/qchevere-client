@@ -1,0 +1,113 @@
+<link rel="import" href="./../bower_components/polymer/polymer.html">
+<link rel="import" href="./../bower_components/app-route/app-location.html">
+<link rel="import" href="./../bower_components/app-route/app-route.html">
+<link rel="import" href="./../bower_components/paper-styles/paper-styles.html">
+<link rel="import" href="./../bower_components/paper-drawer-panel/paper-drawer-panel.html">
+<link rel="import" href="./../bower_components/paper-icon-button/paper-icon-button.html">
+<link rel="import" href="./../bower_components/paper-toolbar/paper-toolbar.html">
+<link rel="import" href="./../bower_components/iron-icons/iron-icons.html">
+<link rel="import" href="./../bower_components/neon-animation/neon-animated-pages.html">
+<link rel="import" href="./../bower_components/iron-flex-layout/iron-flex-layout-classes.html">
+
+<link rel="import" href="./main-app/main-app.html">
+<link rel="import" href="./init-splash/init-splash.html">
+<link rel="import" href="./init-app/init-app.html">
+<link rel="import" href="./init-register/init-register.html">
+<link rel="import" href="./init-sesion/init-sesion.html">
+<dom-module id="main-container">
+	<template>
+		<style is="custom-style">
+			:host{
+				height:100%;
+				display:flex;
+				width:100%;
+				background-color:#1f2cba;
+			}
+			</style>
+			<app-location route="{{route}}"></app-location>
+		    <app-route
+		        route="{{route}}"
+		        pattern="/:page"
+		        data="{{routeData}}"
+		        tail="{{subroute}}"></app-route>
+			<neon-animated-pages class="flex"	selected="[[page]]" attr-for-selected="name" selected-attribute="visible">
+				<init-splash name="intro"></init-splash>
+				<init-app name="init"  ></init-app>
+				<init-register name="register"  ></init-register>
+				<init-sesion name="login"  ></init-sesion>
+				<main-app name="main"  ></main-app>
+			</neon-animated-pages>
+	</template>
+	<script>
+	Polymer({
+	  is: "main-container",
+	  properties: {
+		  page: {
+            type: String,
+            reflectToAttribute: true,
+            observer: '_pageChanged'
+          },
+	},
+	observers: [
+	  '_routePageChanged(routeData.page)'
+	],
+
+	_routePageChanged: function(page) {
+	  this.page = page || 'intro';
+	},
+
+	_pageChanged: function(page, oldPage) {
+	  if (page != null) {
+		this._pageLoaded(Boolean(oldPage));
+	  }
+	},
+
+	_pageLoaded: function(shouldResetLayout) {
+	  this._ensureLazyLoaded();
+	  if (shouldResetLayout) {
+		// The size of the header depends on the page (e.g. on some pages the tabs
+		// do not appear), so reset the header's layout only when switching pages.
+		this.async(function() {
+		  //this.$.header.resetLayout();
+		}, 1);
+	  }
+	},
+
+	_ensureLazyLoaded: function() {
+
+	},
+
+	_notifyNetworkStatus: function() {
+	  var oldOffline = this.offline;
+	  this.offline =  !navigator.onLine;
+	  // Show the snackbar if the user is offline when starting a new session
+	  // or if the network status changed.
+	  if (this.offline || (!this.offline && oldOffline === true)) {
+		if (!this._networkSnackbar) {
+		  this._networkSnackbar = document.createElement('shop-snackbar');
+		  Polymer.dom(this.root).appendChild(this._networkSnackbar);
+		}
+		Polymer.dom(this._networkSnackbar).innerHTML = this.offline ?
+			'You are offline' : 'You are online';
+		this._networkSnackbar.open();
+	  }
+	},
+	ready:function(){
+
+
+		var self = this;
+
+		document.addEventListener('show-init-app',function(){
+			self.set('route.path', '/init');
+		});
+		document.addEventListener('show-init-register',function(){
+			self.set('route.path', '/register');
+		});
+		document.addEventListener('show-init-login',function(){
+			self.set('route.path', '/login');
+		});
+	}
+
+	});
+	</script>
+</dom-module>

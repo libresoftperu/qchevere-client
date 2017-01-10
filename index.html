@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+
+    <title>q chevere</title>
+    <meta name="description" content="qchevere description">
+
+    <!-- See https://goo.gl/OOhYW5 -->
+    <link rel="manifest" href="manifest.json">
+    <script type="javascript"  src="bower_components/webcomponentsjs/webcomponents-lite.js"></script>
+    <link rel="import" href="bower_components/iron-flex-layout/iron-flex-layout-classes.html">
+    <link rel="import" href="src/main-container.html">
+     <script src = "https://plus.google.com/js/client:platform.js" async defer></script>
+	<script src="https://www.gstatic.com/firebasejs/3.6.1/firebase.js"></script>
+	<script>
+		// Initialize Firebase
+		var config = {
+		apiKey: "AIzaSyBE-OGoae3FfibNRmmXUTfbftmpVpE2jxQ",
+		authDomain: "qchevere-2b000.firebaseapp.com",
+		databaseURL: "https://qchevere-2b000.firebaseio.com",
+		storageBucket: "qchevere-2b000.appspot.com",
+		messagingSenderId: "976081896316"
+		};
+		firebase.initializeApp(config);
+	</script>
+  </head>
+  <body class="fullbleed layout vertical">
+      <main-container/>
+  </body>
+</html>
