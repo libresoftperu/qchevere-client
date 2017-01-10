@@ -1,6 +1,6 @@
-# \<moto-app\>
+# \<q-chevere\>
 
-aplicación de tranporte de motos lineales
+aplicación para la publicaciòn de eventos
 
 ## Install the Polymer-CLI
 
